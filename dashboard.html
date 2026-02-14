@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 學長 & 歐文協作中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .countdown {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(240, 147, 251, 0.4);
+        }
+
+        .countdown h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .countdown-timer {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .countdown-target {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .progress-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .progress-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .progress-bar-container {
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 3px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 30px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+
+        .task-lists {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .task-column {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .task-column h3 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 18px;
+        }
+
+        .task-column.urgent h3 {
+            border-bottom-color: #f5576c;
+        }
+
+        .task-column.progress h3 {
+            border-bottom-color: #f093fb;
+        }
+
+        .task-column.done h3 {
+            border-bottom-color: #48c774;
+        }
+
+        .task-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .task-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .task-item.urgent {
+            border-left-color: #f5576c;
+            background: #fff5f5;
+        }
+
+        .task-item.progress {
+            border-left-color: #f093fb;
+            background: #fef5ff;
+        }
+
+        .task-item.done {
+            border-left-color: #48c774;
+            background: #f0fff4;
+            opacity: 0.7;
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .task-title {
+            font-weight: bold;
+            color: #333;
+            flex: 1;
+        }
+
+        .task-item.done .task-title {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .task-btn {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .task-btn:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .assignee {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .add-task-form {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .add-task-form h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .add-btn {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .task-lists {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown-timer {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 學長 & 歐文協作中心</h1>
+            <p>GyberPass 3/14 發佈會專案追蹤 | 剩餘 27 天</p>
+        </div>
+
+        <div class="countdown">
+            <h2>⏰ 離發佈會還有</h2>
+            <div class="countdown-timer" id="countdown">27天 00小時 00分 00秒</div>
+            <div class="countdown-target">2026年3月14日 18:00</div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalTasks">0</div>
+                <div class="stat-label">總任務</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="urgentTasks">0</div>
+                <div class="stat-label">🔴 緊急任務</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="progressTasks">0</div>
+                <div class="stat-label">🟡 進行中</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="doneTasks">0</div>
+                <div class="stat-label">🟢 已完成</div>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <h3>📊 總體進度</h3>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%">0%</div>
+            </div>
+        </div>
+
+        <div class="task-lists">
+            <div class="task-column urgent">
+                <h3>🔴 緊急待辦</h3>
+                <div id="urgentTasksList"></div>
+            </div>
+
+            <div class="task-column progress">
+                <h3>🟡 進行中</h3>
+                <div id="progressTasksList"></div>
+            </div>
+
+            <div class="task-column done">
+                <h3>🟢 已完成</h3>
+                <div id="doneTasksList"></div>
+            </div>
+        </div>
+
+        <div class="add-task-form">
+            <h3>➕ 新增任務</h3>
+            <div class="form-group">
+                <label>任務名稱</label>
+                <input type="text" id="taskTitle" placeholder="例如：GyberPass 核心功能凍結">
+            </div>
+            <div class="form-group">
+                <label>優先級</label>
+                <select id="taskPriority">
+                    <option value="urgent">🔴 緊急</option>
+                    <option value="normal">🟡 一般</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>負責人</label>
+                <select id="taskAssignee">
+                    <option value="學長">學長</option>
+                    <option value="歐文">歐文</option>
+                    <option value="柚子">柚子</option>
+                    <option value="景棠">景棠</option>
+                    <option value="阿德">阿德</option>
+                    <option value="家志">家志</option>
+                    <option value="順淵">順淵</option>
+                    <option value="柏霖">柏霖</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>狀態</label>
+                <select id="taskStatus">
+                    <option value="todo">待辦</option>
+                    <option value="progress">進行中</option>
+                    <option value="done">已完成</option>
+                </select>
+            </div>
+            <button class="add-btn" onclick="addTask()">➕ 新增任務</button>
+        </div>
+    </div>
+
+    <script>
+        // 初始化任務數據（如果有 localStorage 就載入，否則使用預設值）
+        let tasks = JSON.parse(localStorage.getItem('gyberPassTasks')) || [
+            {
+                id: 1,
+                title: 'GyberPass 核心功能凍結 (UI, Login, GPS)',
+                priority: 'urgent',
+                assignee: '學長',
+                status: 'progress',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 2,
+                title: 'Alpha 測試準備',
+                priority: 'urgent',
+                assignee: '歐文',
+                status: 'todo',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 3,
+                title: '測試用戶招募（20-50人）',
+                priority: 'urgent',
+                assignee: '學長',
+                status: 'todo',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 4,
+                title: '語音包錄製',
+                priority: 'normal',
+                assignee: '柚子',
+                status: 'progress',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 5,
+                title: '發佈會流程設計',
+                priority: 'normal',
+                assignee: '歐文',
+                status: 'todo',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 6,
+                title: '預熱影片腳本（2-3支）',
+                priority: 'normal',
+                assignee: '歐文',
+                status: 'todo',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 7,
+                title: '產品規格書 (GDD VFinal)',
+                priority: 'normal',
+                assignee: '學長',
+                status: 'done',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 8,
+                title: '系統架構設計',
+                priority: 'normal',
+                assignee: '學長',
+                status: 'done',
+                createdAt: new Date().toISOString()
+            }
+        ];
+
+        // 倒數計時器
+        function updateCountdown() {
+            const targetDate = new Date('2026-03-14T18:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML =
+                `${days}天 ${hours}小時 ${minutes}分 ${seconds}秒`;
+        }
+
+        // 渲染任務列表
+        function renderTasks() {
+            const urgentList = document.getElementById('urgentTasksList');
+            const progressList = document.getElementById('progressTasksList');
+            const doneList = document.getElementById('doneTasksList');
+
+            urgentList.innerHTML = '';
+            progressList.innerHTML = '';
+            doneList.innerHTML = '';
+
+            tasks.forEach(task => {
+                const taskElement = createTaskElement(task);
+
+                if (task.status === 'done') {
+                    doneList.innerHTML += taskElement;
+                } else if (task.priority === 'urgent' && task.status === 'todo') {
+                    urgentList.innerHTML += taskElement;
+                } else if (task.status === 'progress') {
+                    progressList.innerHTML += taskElement;
+                } else {
+                    progressList.innerHTML += taskElement;
+                }
+            });
+
+            updateStats();
+            saveTasks();
+        }
+
+        // 創建任務元素
+        function createTaskElement(task) {
+            const statusClass = task.status === 'done' ? 'done' :
+                              task.priority === 'urgent' ? 'urgent' : 'progress';
+
+            const date = new Date(task.createdAt).toLocaleDateString('zh-TW');
+
+            return `
+                <div class="task-item ${statusClass}">
+                    <div class="task-header">
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-actions">
+                            <button class="task-btn" onclick="moveTask(${task.id})" title="移動到下一狀態">→</button>
+                            <button class="task-btn" onclick="deleteTask(${task.id})" title="刪除">✕</button>
+                        </div>
+                    </div>
+                    <div class="task-meta">
+                        <span class="assignee">👤 ${task.assignee}</span>
+                        <span>📅 ${date}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 新增任務
+        function addTask() {
+            const title = document.getElementById('taskTitle').value.trim();
+            const priority = document.getElementById('taskPriority').value;
+            const assignee = document.getElementById('taskAssignee').value;
+            const status = document.getElementById('taskStatus').value;
+
+            if (!title) {
+                alert('請輸入任務名稱！');
+                return;
+            }
+
+            const newTask = {
+                id: Date.now(),
+                title: title,
+                priority: priority,
+                assignee: assignee,
+                status: status,
+                createdAt: new Date().toISOString()
+            };
+
+            tasks.push(newTask);
+            document.getElementById('taskTitle').value = '';
+            renderTasks();
+        }
+
+        // 移動任務到下一狀態
+        function moveTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                if (task.status === 'todo') {
+                    task.status = 'progress';
+                } else if (task.status === 'progress') {
+                    task.status = 'done';
+                } else {
+                    task.status = 'done';
+                }
+                renderTasks();
+            }
+        }
+
+        // 刪除任務
+        function deleteTask(id) {
+            if (confirm('確定要刪除這個任務嗎？')) {
+                tasks = tasks.filter(t => t.id !== id);
+                renderTasks();
+            }
+        }
+
+        // 更新統計數據
+        function updateStats() {
+            const total = tasks.length;
+            const urgent = tasks.filter(t => t.priority === 'urgent' && t.status !== 'done').length;
+            const progress = tasks.filter(t => t.status === 'progress').length;
+            const done = tasks.filter(t => t.status === 'done').length;
+            const progressPercent = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('urgentTasks').textContent = urgent;
+            document.getElementById('progressTasks').textContent = progress;
+            document.getElementById('doneTasks').textContent = done;
+            document.getElementById('progressBar').style.width = progressPercent + '%';
+            document.getElementById('progressBar').textContent = progressPercent + '%';
+        }
+
+        // 保存任務到 localStorage
+        function saveTasks() {
+            localStorage.setItem('gyberPassTasks', JSON.stringify(tasks));
+        }
+
+        // 初始化
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        renderTasks();
+    </script>
+</body>
+</html>
